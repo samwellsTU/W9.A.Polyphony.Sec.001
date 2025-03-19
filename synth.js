@@ -32,6 +32,12 @@ const mtof = function (midi) {
   return 440 * Math.pow(2, (midi - 69) / 12);
 };
 
+// function (midi) {
+//   return 440 * Math.pow(2, (midi - 69) / 12);
+// }
+
+// (midi) => 440 * Math.pow(2, (midi - 69) / 12);
+
 /**
  * @function startNote
  * @description Starts a note by creating and storing a new Voice instance.
@@ -41,7 +47,15 @@ const startNote = function (note) {
   if (!activeVoices[note]) {
     // save a new instance of the class Voice instead of the mtof(note)
 
-    let newVoice = new Voice(mySynthCtx, mtof(note), masterGain);
+    let newVoice = new Voice(
+      mySynthCtx,
+      mtof(note),
+      masterGain,
+      0.02,
+      0.05,
+      0.125,
+      0.5
+    );
     activeVoices[note] = newVoice;
     activeVoices[note].start(); //newVoice.start()
     // console.log(activeVoices);
@@ -91,6 +105,7 @@ const noteMap = {
  */
 document.addEventListener("keydown", (e) => {
   if (noteMap[e.key]) {
+    // console.log(e);
     startNote(noteMap[e.key]);
   }
 });
